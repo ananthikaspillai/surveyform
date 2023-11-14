@@ -63,9 +63,44 @@
 // export default App;
 
 
+// import React, { useState } from 'react';
+// import QuestionsPage from './components/QuestionsPage';
+// import ResponsesPage from './components/ResponsesPage';
+// import Header from "./components/Header"
+
+// const App = () => {
+//   const [currentPage, setCurrentPage] = useState('questions');
+
+//   return (
+//     <div className='bg-gradient-to-br from-cyan-300 to-cyan-800 min-h-screen text-white '> {/* Add a dark background color */}
+//       <div className='px-8 pt-8 '>
+//         <Header/>
+//           <div className="bg-white p-4">
+//             <button className="  text-teal-700 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('questions')}>
+//               Questions
+//             </button>
+//             <button className=" text-teal-700 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('responses')}>
+//               Responses
+//             </button>
+//           </div>
+//           <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white text-black"> {/* Change text color to black */}
+//             <div className="px-4 py-6 sm:px-0">
+//               {currentPage === 'questions' ? <QuestionsPage /> : <ResponsesPage />}
+//             </div>
+//           </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default App;
+
+
 import React, { useState } from 'react';
 import QuestionsPage from './components/QuestionsPage';
 import ResponsesPage from './components/ResponsesPage';
+import PreviewPage from './components/PreviewPage'; // Import PreviewPage
+import CollectResponsePage from './components/CollectResponsePage'; // Import CollectResponsePage
 import Header from "./components/Header"
 
 const App = () => {
@@ -76,16 +111,25 @@ const App = () => {
       <div className='px-8 pt-8 '>
         <Header/>
           <div className="bg-white p-4">
-            <button className="  text-gray-500 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('questions')}>
+            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('questions')}>
               Questions
             </button>
-            <button className=" text-gray-500 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('responses')}>
+            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 px-6 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('responses')}>
               Responses
+            </button>
+            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 ml-[650px]  rounded m-2 cursor-pointer" onClick={() => setCurrentPage('preview')}>
+              Preview
+            </button>
+            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('collect')}>
+              Collect Response
             </button>
           </div>
           <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white text-black"> {/* Change text color to black */}
             <div className="px-4 py-6 sm:px-0">
-              {currentPage === 'questions' ? <QuestionsPage /> : <ResponsesPage />}
+              {currentPage === 'questions' ? <QuestionsPage /> : 
+               currentPage === 'responses' ? <ResponsesPage /> : 
+               currentPage === 'preview' ? <PreviewPage /> : 
+               <CollectResponsePage />}
             </div>
           </div>
       </div>
