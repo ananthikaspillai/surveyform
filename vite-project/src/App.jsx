@@ -99,15 +99,15 @@
 import React, { useState } from 'react';
 import QuestionsPage from './components/QuestionsPage';
 import ResponsesPage from './components/ResponsesPage';
-import PreviewPage from './components/PreviewPage'; // Import PreviewPage
-import CollectResponsePage from './components/CollectResponsePage'; // Import CollectResponsePage
+import PreviewPage from './components/PreviewPage'; 
+import CollectResponsePage from './components/CollectResponsePage'; 
 import Header from "./components/Header"
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('questions');
 
   return (
-    <div className='bg-gradient-to-br from-cyan-300 to-cyan-800 min-h-screen text-white '> {/* Add a dark background color */}
+    <div className='bg-gradient-to-br from-cyan-300 to-cyan-800 min-h-screen text-white '>
       <div className='px-8 pt-8 '>
         <Header/>
           <div className="bg-white p-4">
