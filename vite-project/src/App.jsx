@@ -111,16 +111,16 @@ const App = () => {
       <div className='px-8 pt-8 '>
         <Header/>
           <div className="bg-white p-4">
-            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('questions')}>
+            <button className="text-green-700 hover:bg-gray-200  font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('questions')}>
               Questions
             </button>
-            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 px-6 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('responses')}>
+            <button className="text-green-700 hover:bg-gray-200  font-bold py-2 px-6 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('responses')}>
               Responses
             </button>
-            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 ml-[650px]  rounded m-2 cursor-pointer" onClick={() => setCurrentPage('preview')}>
+            <button className="text-green-700 hover:bg-gray-200  font-bold py-2 ml-[650px]  rounded m-2 cursor-pointer" onClick={() => setCurrentPage('preview')}>
               Preview
             </button>
-            <button className="text-green-700 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('collect')}>
+            <button className="text-green-700 hover:bg-gray-200 font-bold py-2 px-4 rounded m-2 cursor-pointer" onClick={() => setCurrentPage('collect')}>
               Collect Response
             </button>
           </div>
