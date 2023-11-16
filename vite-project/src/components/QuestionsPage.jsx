@@ -105,26 +105,34 @@ const QuestionsPage = () => {
   const [showChoice, setShowChoice] = useState(false);
   const [showText, setShowText] = useState(false); // New state variable for the text option
   const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState(['', '']);
+  const [options, setOptions] = useState(['', '','']);
 
-  const handleChoiceClick = () => {
+  const handleChoiceClick = async() => {
     setShowChoice(true);
     setShowText(false); // Hide the text option when the choice option is shown
     setQuestion('');
-    setOptions(['', '']);
-  };
+    setOptions(['', '','']);
 
+    try {
+      const response = await axios.post('http://localhost:8081/surveys/questions', {
+        question,
+        options,
+      });
+  
+      console.log("Question and options sent successfully", response.data);
+    } catch (error) {
+      console.error("Failed to send question and options", error);
+    }
+  };
   const handleTextClick = () => { // New function for the text option
     setShowText(true);
     setShowChoice(false); // Hide the choice option when the text option is shown
     setQuestion('');
-    setOptions(['', '']);
+    setOptions(['', '','']);
   };
-
   const handleAddOption = () => {
     setOptions([...options, '']);
   };
-
   return (
     <div className="px-10">
       <div>
@@ -144,7 +152,7 @@ const QuestionsPage = () => {
           </div>
         )}
         <div className="flex space-x-4"> {/* Add a flex container */}
-          <button className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline active:bg-teal-500 active:scale-100" type="button" onClick={() => setShowOptions(!showOptions)}>
+          <button className="bg-teal-700 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline active:bg-teal-500 active:scale-100" type="button" onClick={() => setShowOptions(!showOptions)}>
             + Add New
           </button>
           {showOptions && (
@@ -163,12 +171,12 @@ const QuestionsPage = () => {
             <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Question" />
             {options.map((option, index) => (
               <div key={index} className="flex items-center mb-4">
-                <input type="radio" id={`option${index}`} name="option" value={option} className="mr-2" disabled /> {/* Disable the radio button */}
+                <input type="radio" id={`option${index}`} name="option" value={option} className="mr-2" disabled /> 
                 <textarea value={option} onChange={(e) => {
                   const newOptions = [...options];
                   newOptions[index] = e.target.value;
                   setOptions(newOptions);
-                }} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder={`Option ${index + 1}`} disabled /> {/* Disable the textarea */}
+                }} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder={`Option ${index + 1}`} /> 
               </div>
             ))}
             <button onClick={handleAddOption} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -190,7 +198,6 @@ const QuestionsPage = () => {
     </div>
   );
 };
-
 export default QuestionsPage;
 
 
