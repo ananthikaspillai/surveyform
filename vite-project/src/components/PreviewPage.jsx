@@ -1,88 +1,15 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// function PreviewPage() {
-//   const [questions, setQuestions] = useState([]);
-
-//   useEffect(() => {
-//     const fetchQuestions = async () => {
-//       try {
-//         const response = await axios.get('http://localhost:8081/surveys/questions');
-//         setQuestions(response.data);
-//       } catch (error) {
-//         console.error("Failed to fetch questions", error);
-//       }
-//     };
-
-//     fetchQuestions();
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>PreviewPage</h1>
-//       {questions.map((question, index) => (
-//         <div key={index}>
-//           <h2>{question.question}</h2>
-//           {question.options.map((option, i) => (
-//             <p key={i}>{option}</p>
-//           ))}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default PreviewPage;
 
 
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
+// import { Link } from 'react-router-dom';
 
 // const PreviewPage = () => {
 //   const [surveys, setSurveys] = useState([]);
+//   const [selectedSurvey, setSelectedSurvey] = useState(null);
+//   const [questionsAndOptions, setQuestionsAndOptions] = useState([]);
 
 //   useEffect(() => {
-//     // Fetch survey data when the component mounts
-//     fetchSurveyData();
-//   }, []);
-
-//   const fetchSurveyData = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:8081/surveys');
-//       setSurveys(response.data);
-//       console.log('Survey data retrieved successfully', response.data);
-//     } catch (error) {
-//       console.error('Failed to retrieve survey data', error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>PreviewPage</h1>
-//       {/* Display survey data from the surveys state */}
-//       {surveys.map((survey) => (
-//         <div key={survey.id}>
-//           <h2>{survey.title}</h2>
-//           <p>{survey.description}</p>
-//           {/* Add more details as needed */}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default PreviewPage;
-
-
-
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// const PreviewPage = () => {
-//   const [surveys, setSurveys] = useState([]);
-
-//   useEffect(() => {
-//     // Fetch survey data when the component mounts
 //     fetchSurveyData();
 //   }, []);
 
@@ -100,26 +27,76 @@
 //     try {
 //       const response = await axios.get(`http://localhost:8081/surveys/${surveyId}/questions`);
 //       console.log('Questions and options retrieved successfully', response.data);
-//       // Process the response data as needed
+//       setQuestionsAndOptions(response.data);
+//       setSelectedSurvey(surveyId);
 //     } catch (error) {
 //       console.error('Failed to retrieve questions and options', error);
 //     }
 //   };
 
+//   const handleDeleteSurvey = async (surveyId) => {
+//     try {
+//       await axios.delete(`http://localhost:8081/surveys/${surveyId}`);
+//       console.log('Survey deleted successfully');
+//       fetchSurveyData()
+//       setSelectedSurvey(null);
+//       setQuestionsAndOptions([]);
+//     } catch (error) {
+//       console.error('Failed to delete survey', error);
+//     }
+//   };
+
+//   const handleSubmit = () => {
+//     console.log('Survey Submitted!');
+//     window.alert('Thanks! Your Response was Submitted');
+//   };
+
 //   return (
-//     <div>
-//       <h1>PreviewPage</h1>
-//       {/* Display survey data from the surveys state */}
-//       {surveys.map((survey) => (
-//         <div key={survey.id}>
-//           <h2>{survey.title}</h2>
-//           <p>{survey.description}</p>
-//           <button onClick={() => fetchQuestionsAndOptions(survey.id)}>
-//             Fetch Questions and Options
-//           </button>
-//           {/* Add more details as needed */}
-//         </div>
-//       ))}
+//     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
+//       <div className="w-[800px] space-y-10 bg-white p-10 rounded-lg shadow-md">
+//         <h1 className="text-4xl text-center font-bold mb-4">Response</h1>
+//         {surveys.map((survey) => (
+//           <div key={survey.id} className="border p-4 rounded-lg mb-4">
+//             <h2 className="text-2xl font-bold mb-2">{survey.title}</h2>
+//             <p className="mb-4">{survey.description}</p>
+//             <button className="bg-blue-500 text-white rounded-md px-6 mr-[10px] py-2 mb-2" onClick={() => fetchQuestionsAndOptions(survey.id)}>
+//               Fetch Questions and Options
+//             </button>
+//             <button className="bg-red-500 text-white rounded-md px-4 py-2 mr-2" onClick={() => handleDeleteSurvey(survey.id)}>
+//               Delete Survey
+//             </button>
+
+//             {selectedSurvey === survey.id && (
+//               <div className="mt-4">
+//                 <h3 className="text-2xl font-bold mb-2">Questions and Options:</h3>
+//                 {questionsAndOptions.map((question) => (
+//                   <div key={question.id} className="border p-4 rounded-lg mb-4">
+//                     <p className="font-bold">{question.question}</p>
+//                     <div>
+//                       <input type="radio" id={`option1-${question.id}`} name={`question-${question.id}`} value={question.option[0].option1} />
+//                       <label htmlFor={`option1-${question.id}`} className="ml-2">Option 1: {question.option[0].option1}</label>
+//                     </div>
+//                     <div>
+//                       <input type="radio" id={`option2-${question.id}`} name={`question-${question.id}`} value={question.option[0].option2} />
+//                       <label htmlFor={`option2-${question.id}`} className="ml-2">Option 2: {question.option[0].option2}</label>
+//                     </div>
+//                     <div>
+//                       <input type="radio" id={`option3-${question.id}`} name={`question-${question.id}`} value={question.option[0].option3} />
+//                       <label htmlFor={`option3-${question.id}`} className="ml-2">Option 3: {question.option[0].option3}</label>
+//                     </div>
+//                   </div>
+//                 ))}
+//                 <button className="bg-green-500 text-white rounded-md px-4 py-2" onClick={handleSubmit}>
+//                   Submit
+//                 </button>
+//               </div>
+//             )}
+//           </div>
+//         ))}
+//         <Link className="ml-[500px]" to="/Link" state={{ surveyCount: selectedSurvey }}>
+//           Link
+//         </Link>
+//       </div>
 //     </div>
 //   );
 // };
@@ -129,14 +106,16 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Link from './Link';
-
+import { Link } from 'react-router-dom';
+ import { useResponseContext } from "../ResponseContext"
 
 const PreviewPage = () => {
+  const { incrementResponseCount } = useResponseContext();
   const [surveys, setSurveys] = useState([]);
+  const [selectedSurvey, setSelectedSurvey] = useState(null);
+  const [questionsAndOptions, setQuestionsAndOptions] = useState([]);
 
   useEffect(() => {
-    // Fetch survey data when the component mounts
     fetchSurveyData();
   }, []);
 
@@ -154,7 +133,8 @@ const PreviewPage = () => {
     try {
       const response = await axios.get(`http://localhost:8081/surveys/${surveyId}/questions`);
       console.log('Questions and options retrieved successfully', response.data);
-      // Process the response data as needed
+      setQuestionsAndOptions(response.data);
+      setSelectedSurvey(surveyId);
     } catch (error) {
       console.error('Failed to retrieve questions and options', error);
     }
@@ -162,33 +142,98 @@ const PreviewPage = () => {
 
   const handleDeleteSurvey = async (surveyId) => {
     try {
-      // Make a DELETE request to the specified API to delete the survey
       await axios.delete(`http://localhost:8081/surveys/${surveyId}`);
       console.log('Survey deleted successfully');
-      // Fetch updated survey data after deletion
       fetchSurveyData();
+      setSelectedSurvey(null);
+      setQuestionsAndOptions([]);
     } catch (error) {
       console.error('Failed to delete survey', error);
     }
   };
 
+  const handleSubmit = () => {
+    console.log('Survey Submitted!');
+    window.alert('Thanks! Your Response was Submitted');
+    incrementResponseCount();
+  };
+
   return (
-    <div>
-      <h1>PreviewPage</h1>
-      {/* Display survey data from the surveys state */}
-      {surveys.map((survey) => (
-        <div key={survey.id}>
-          <h2>{survey.title}</h2>
-          <p>{survey.description}</p>
-          <button onClick={() => fetchQuestionsAndOptions(survey.id)}>
-            Fetch Questions and Options
-          </button>
-          <br/>
-          <button  className ="bg-red-500"onClick={() => handleDeleteSurvey(survey.id)}>
-            Delete Survey
-          </button>
-        </div>
-      ))}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-[800px] space-y-10 bg-white p-10 rounded-lg shadow-md">
+        <h1 className="text-4xl text-center font-bold mb-4">Response</h1>
+        {surveys.map((survey) => (
+          <div key={survey.id} className="border p-4 rounded-lg mb-4">
+            <h2 className="text-2xl font-bold mb-2">{survey.title}</h2>
+            <p className="mb-4">{survey.description}</p>
+            <button
+              className="bg-blue-500 text-white rounded-md px-6 mr-[10px] py-2 mb-2"
+              onClick={() => fetchQuestionsAndOptions(survey.id)}
+            >
+              Fetch Questions and Options
+            </button>
+            <button
+              className="bg-red-500 text-white rounded-md px-4 py-2 mr-2"
+              onClick={() => handleDeleteSurvey(survey.id)}
+            >
+              Delete Survey
+            </button>
+
+            {selectedSurvey === survey.id && (
+              <div className="mt-4">
+                <h3 className="text-2xl font-bold mb-2">Questions and Options:</h3>
+                {questionsAndOptions.map((question) => (
+                  <div key={question.id} className="border p-4 rounded-lg mb-4">
+                    <p className="font-bold">{question.question}</p>
+                    <div>
+                      <input
+                        type="radio"
+                        id={`option1-${question.id}`}
+                        name={`question-${question.id}`}
+                        value={question.option[0].option1}
+                      />
+                      <label htmlFor={`option1-${question.id}`} className="ml-2">
+                        Option 1: {question.option[0].option1}
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id={`option2-${question.id}`}
+                        name={`question-${question.id}`}
+                        value={question.option[0].option2}
+                      />
+                      <label htmlFor={`option2-${question.id}`} className="ml-2">
+                        Option 2: {question.option[0].option2}
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id={`option3-${question.id}`}
+                        name={`question-${question.id}`}
+                        value={question.option[0].option3}
+                      />
+                      <label htmlFor={`option3-${question.id}`} className="ml-2">
+                        Option 3: {question.option[0].option3}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  className="bg-green-500 text-white rounded-md px-4 py-2"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        <Link className="ml-[500px]" to="/Link" state={{ surveyCount: selectedSurvey }}>
+          Link
+        </Link>
+      </div>
     </div>
   );
 };

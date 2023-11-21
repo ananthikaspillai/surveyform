@@ -310,10 +310,50 @@
 // export default App
 
 
+// import React, { useState } from "react";
+// import { Login } from "./components/Login";
+// import { Signup } from "./components/Signup";
+// import Home from "./components/Home";
+
+// function App() {
+//   const [currentForm, setCurrentForm] = useState('login');
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   const toggleForm = (formName) => {
+//     setCurrentForm(formName);
+//   }
+
+//   const handleLoginSuccess = () => {
+//     setIsLoggedIn(true);
+//   }
+
+//   return (
+//     <div className="App">
+//       {isLoggedIn ? (
+//         <Home/>
+//       ) : (
+//         currentForm === "login" ? (
+//           <Login onFormSwitch={toggleForm} onLoginSuccess={handleLoginSuccess} />
+//         ) : (
+//           <Signup onFormSwitch={toggleForm} />
+//         )
+//       )}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import Home from "./components/Home";
+import PreviewPage from './components/PreviewPage'; 
+import Link from './components/Link';
+
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -328,21 +368,30 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {isLoggedIn ? (
-        <Home/>
-      ) : (
-        currentForm === "login" ? (
-          <Login onFormSwitch={toggleForm} onLoginSuccess={handleLoginSuccess} />
-        ) : (
-          <Signup onFormSwitch={toggleForm} />
-        )
-      )}
-    </div>
+
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/preview" element={<PreviewPage />} />
+          <Route path="/link" element={<Link/>} /> {/* Add this line */}
+          <Route path="/" element={
+            isLoggedIn ? (
+              <Home/>
+            ) : (
+              currentForm === "login" ? (
+                <Login onFormSwitch={toggleForm} onLoginSuccess={handleLoginSuccess} />
+              ) : (
+                <Signup onFormSwitch={toggleForm} />
+              )
+            )
+          } />
+        </Routes>
+      </div>
+    </Router>
+
   );
 }
 
 export default App;
-
 
 
