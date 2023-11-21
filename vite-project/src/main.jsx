@@ -13,15 +13,30 @@
 //   </React.StrictMode>,
 //     document.getElementById('root')
 
+// import React from 'react';
+// import App from './App';
+// import { createRoot } from 'react-dom/client';
+// import './index.css'
+
+// const root = createRoot(document.getElementById("root"));
+
+// root.render(
+//   <React.StrictMode>
+//       <App />
+//   </React.StrictMode>,
+// );
+
+
 import React from 'react';
+import ReactDOM from 'react-dom';
 import App from './App';
-import { createRoot } from 'react-dom/client';
+import { ResponseProvider } from './ResponseContext';
 import './index.css'
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(
+ReactDOM.render(
   <React.StrictMode>
+    <ResponseProvider>
       <App />
+    </ResponseProvider>
   </React.StrictMode>,
+  document.getElementById('root')
 );
