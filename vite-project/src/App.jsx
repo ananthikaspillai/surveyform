@@ -346,7 +346,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
@@ -358,6 +358,7 @@ import Link from './components/Link';
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginId, setLoginId] = useState(null)
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
@@ -366,6 +367,19 @@ function App() {
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   }
+
+  const newLoginId =  localStorage.getItem('LoginId')
+
+
+  useEffect(() => {
+    if(newLoginId){
+      setIsLoggedIn(true)
+    }
+    else{
+      setIsLoggedIn(false)
+    }
+  }, [newLoginId])
+  
 
   return (
 

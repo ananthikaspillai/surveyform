@@ -159,7 +159,7 @@ const PreviewPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 py-12 px-4 sm:px-6 lg:px-8">
+    <div className=" flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 py-12 rounded-lg ">
       <div className="w-[800px] space-y-10 bg-white p-10 rounded-lg shadow-md">
         <h1 className="text-4xl text-center font-bold mb-4">Response</h1>
         {surveys.map((survey) => (

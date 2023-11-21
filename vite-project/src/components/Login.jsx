@@ -425,6 +425,7 @@ export const Login = (props) => {
       const response = await axios.post('http://localhost:8081/user/login', { email, password: pass });
       console.log(response.data);
       props.onLoginSuccess();
+      localStorage.setItem("LoginId", response.data)
     } catch (error) {
       console.error(error);
       // Display the pop-up message when the login fails

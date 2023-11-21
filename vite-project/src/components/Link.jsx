@@ -107,14 +107,15 @@ function Link() {
                             <input type="radio" id={`option3-${question.id}`} name={`question-${question.id}`} value={question.option[0].option3} />
                             <label htmlFor={`option3-${question.id}`} className="ml-2">Option 3: {question.option[0].option3}</label>
                         </div>
-                        <button
+                     
+                    </div>
+                ))}
+                   <button
                             className="bg-teal-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             onClick={handleSubmit}
                         >
                             Submit
                         </button>
-                    </div>
-                ))}
             </div>
         </div>
     );
