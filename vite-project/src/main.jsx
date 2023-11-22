@@ -30,13 +30,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { ResponseProvider } from './ResponseContext';
+// import { ResponseProvider } from './ResponseContext';
 import './index.css'
 ReactDOM.render(
   <React.StrictMode>
-    <ResponseProvider>
+
       <App />
-    </ResponseProvider>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
