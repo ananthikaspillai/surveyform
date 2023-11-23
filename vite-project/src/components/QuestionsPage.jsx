@@ -365,9 +365,9 @@ const QuestionsPage = () => {
   const [surveyId, setSurveyId] = useState();
   const [savedQuestions, setSavedQuestions] = useState([]);
 
-  const handleAddOption = () => {
-    setOptions([...options, '']);
-  };
+  // const handleAddOption = () => {
+  //   setOptions([...options, '']);
+  // };
 
   const handleSave = async () => {
     try {

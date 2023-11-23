@@ -132,10 +132,11 @@ const ResponsesPage = () => {
   }, [surveyId]);
 
   return (
-    <div className='flex justify-between items-center bg-gray-200 p-4'>
-      <div className='text-center'>
-        <h1 className='text-3xl font-bold'>{surveyData.surveyCount}</h1>
-        <p className='text-xl'>{surveyData.title}</p>
+    <div className='flex justify-between items-center bg-gray-300 p-4'>
+      <div className='ml-[15px]'>
+      <h1 className='text-2xl font-bold '>Title : {surveyData.title}</h1>
+        <p className='text-xl  '>Response : {surveyData.surveyCount}</p>
+       
       </div>
 
       <div className='text-center'>
