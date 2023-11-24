@@ -43,7 +43,7 @@ const Home = () => {
               <VisibilityIcon />
             </div>
             <button
-              className="text-green-700 hover:bg-gray-200 font-bold py-2 rounded m-2 cursor-pointer mr-[10px]"
+              className="text-green-700 hover:bg-gray-200 font-bold py-2 rounded m-2 cursor-pointer mr-[0px]"
               onClick={() => setCurrentPage('preview')}
             >
               Preview

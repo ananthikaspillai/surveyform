@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+// import DeleteIcon from '@mui/icons-material/Delete';
 
 const PreviewPage = () => {
   const [surveys, setSurveys] = useState([]);
