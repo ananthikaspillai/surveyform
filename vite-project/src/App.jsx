@@ -62,7 +62,7 @@ export default App;
 
 
 // import React, { useState, useEffect } from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 // import { Login } from "./components/Login";
 // import { Signup } from "./components/Signup";
 // import Home from "./components/Home";
@@ -95,16 +95,22 @@ export default App;
 //       <div className="App">
 //         <Routes>
 //           {isLoggedIn ? (
+//             <>
 //             <Route path="/" element={<Home />} />
+//             <Route path="/preview" element={<PreviewPage />} />
+//             <Route path="/Link" element={<Link />} />
+//             </>
 //           ) : (
 //             currentForm === "login" ? (
+//               <>
+//               <Route path="/Link" element={<Navigate to={"/"} />} />
 //               <Route path="/" element={<Login onFormSwitch={toggleForm} onLoginSuccess={handleLoginSuccess} />} />
+//               </>
 //             ) : (
 //               <Route path="/" element={<Signup onFormSwitch={toggleForm} />} />
 //             )
 //           )}
-//           <Route path="/preview" element={<PreviewPage />} />
-//           <Route path="/link" element={<Link />} />
+        
 //         </Routes>
 //       </div>
 //     </Router>

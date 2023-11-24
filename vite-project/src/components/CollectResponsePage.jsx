@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 
 function CollectResponsePage() {
@@ -11,7 +9,6 @@ function CollectResponsePage() {
       </div>
   );
 }
-
 export default CollectResponsePage;
 
 
