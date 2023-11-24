@@ -21,41 +21,41 @@ function Link() {
             console.error('Failed to retrieve questions and options', error);
         }
     };
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8081/surveys/${surveysId}/questions/submit`,
-        selectedOptions
-      );
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post(
+                `http://localhost:8081/surveys/${surveysId}/questions/submit`,
+                selectedOptions
+            );
 
-      console.log('Survey Submitted!', response);
+            console.log('Survey Submitted!', response);
 
-      window.alert('Thanks! Your Response was Submitted');
-    } catch (error) {
-      console.error('Failed to submit survey response', error);
-    }
-  };
+            window.alert('Thanks! Your Response was Submitted');
+        } catch (error) {
+            console.error('Failed to submit survey response', error);
+        }
+    };
 
-  const handleOptionChange = (questionId, selectedOption) => {
-    const updatedOptions = [...selectedOptions];
-    const existingIndex = updatedOptions.findIndex(
-      (option) => option.questionId === questionId
-    );
-   
-    if (existingIndex !== -1) {
-      updatedOptions[existingIndex] = {
-        questionId,
-        selectedOption,
-      };
-    } else {
-      updatedOptions.push({
-        questionId,
-        selectedOption,
-      });
-    }
-   
-    setSelectedOptions(updatedOptions);
-  };
+    const handleOptionChange = (questionId, selectedOption) => {
+        const updatedOptions = [...selectedOptions];
+        const existingIndex = updatedOptions.findIndex(
+            (option) => option.questionId === questionId
+        );
+
+        if (existingIndex !== -1) {
+            updatedOptions[existingIndex] = {
+                questionId,
+                selectedOption,
+            };
+        } else {
+            updatedOptions.push({
+                questionId,
+                selectedOption,
+            });
+        }
+
+        setSelectedOptions(updatedOptions);
+    };
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-emerald-400 to-gray-200 py-12 px-4 ">
             <div className="w-[800px] space-y-10 bg-gradient-to-r from-zinc-300 to-zinc-100 p-10 rounded-lg shadow-md" >
