@@ -10,7 +10,6 @@ const ResponsesPage = () => {
     const fetchSurveyData = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/surveys/${surveyId}`);
-
         const data = response.data;
         console.log(data);
 

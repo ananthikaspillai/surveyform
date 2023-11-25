@@ -7,7 +7,7 @@ function Link() {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [surveysId, setSurveysId] = useState();
 
-    useEffect(() => {
+ useEffect(() => {
         fetchQuestionsAndOptions(localStorage.getItem('surveyid'));
     }, []);
 
@@ -29,7 +29,6 @@ function Link() {
             );
 
             console.log('Survey Submitted!', response);
-
             window.alert('Thanks! Your Response was Submitted');
         } catch (error) {
             console.error('Failed to submit survey response', error);
