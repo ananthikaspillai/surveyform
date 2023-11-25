@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const PreviewPage = () => {
   const [surveys, setSurveys] = useState([]);
@@ -105,10 +105,10 @@ const PreviewPage = () => {
               Fetch Questions and Options
             </button>
             <button
-              className="bg-red-500 text-white rounded-md px-4 py-2 mr-2"
+              className=" text-black rounded-md px-4 py-2 mr-2"
               onClick={() => handleDeleteSurvey(survey.id)}
             >
-              Delete Survey
+             <DeleteIcon/>
             </button>
 
             {selectedSurvey === survey.id && (
