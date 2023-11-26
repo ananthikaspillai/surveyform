@@ -148,13 +148,13 @@ const QuestionsPage = () => {
           <h3 className="text-2xl  mt-[30px] font-bold text-green-700">Saved Questions</h3>
           {savedQuestions.map((savedQuestion, index) => (
             <div key={index} className="mt-2">
-<p><strong className=" ml-[40px]">Question:</strong></p>              <textarea
+            <p><strong className=" ml-[40px]">Question:</strong></p><textarea
                 className="shadow border rounded w-[600px] ml-2   mb-2 py-1 px-2 mt-[10px] text-gray-700 leading-tight"
                 value={savedQuestion.question}
                 readOnly
               />
               <br />
-              <p> <input  className="mt-[20px] ml-[30px]" type="radio" disabled /> <strong className="ml-[5px]">Option1:</strong></p>
+              <p><input  className="mt-[20px] ml-[30px]" type="radio" disabled /> <strong className="ml-[5px]">Option1:</strong></p>
               <textarea
                 className="shadow border rounded ml-2 w-[300px]  mb-2 py-1 px-2 mt-[10px] text-gray-700 leading-tight"
                 value={savedQuestion.option[0].option1}
