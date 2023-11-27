@@ -84,6 +84,7 @@ import ResponsesPage from './ResponsesPage';
 import PreviewPage from './PreviewPage';
 import CollectResponsePage from './CollectResponsePage';
 import Header from "./Header"
+import background from "../assets/background_design.jpg"
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
@@ -102,10 +103,10 @@ const Home = () => {
   }
 
   return (
-    <div className=' '>
-      <div className=''>
+    <div className='  '>
+      
         <Header />
-        <div className="bg-white p-4">
+        <div className="bg-white  ">
           <button
             className="text-green-700 hover:bg-gray-200 font-bold py-2 px-4 rounded m-2 cursor-pointer"
             onClick={() => setCurrentPage('questions')}
@@ -142,7 +143,7 @@ const Home = () => {
             Logout
           </button>
         </div>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white text-black">
+        <div style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', color: 'black' }} className="py-[70px]  text-black">
           <div className="px-4 py-6 sm:px-0">
             {currentPage === 'questions' ? <QuestionsPage /> :
               currentPage === 'responses' ? <ResponsesPage /> :
@@ -151,7 +152,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

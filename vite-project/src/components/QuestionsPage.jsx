@@ -10,6 +10,11 @@ const QuestionsPage = () => {
   const [description, setDescription] = useState('');
   const [surveyId, setSurveyId] = useState();
   const [savedQuestions, setSavedQuestions] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowForm(true);
+  }
 
   const handleSave = async () => {
     try {
@@ -66,8 +71,15 @@ const QuestionsPage = () => {
   }, [surveyId]);
 
   return (
-    <div className="px-10">
-      <div className="mb-4">
+    <div className=" bg-white px-[40px] py-[80px] ml-[220px] mr-[220px] ">
+      <button
+           onClick={handleButtonClick}
+           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4"
+         >
+           Untitled
+           </button>
+
+      {/* <div className="mb-2">
         <label
           className="block text-gray-700  ml-[450px] text-sm font-bold mb-2"
           htmlFor="title"
@@ -90,7 +102,25 @@ const QuestionsPage = () => {
           id="description"
           onChange={(e) => setDescription(e.target.value)}
         />
-      </div>
+      </div> */}
+       
+       {showForm && (
+        <div className="mt-4">
+          <textarea
+            className="shadow appearance-none border rounded w-[600px] py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+          />
+          <textarea
+            className="shadow appearance-none border rounded w-[600px] py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+          />
+        </div>
+      )}
+  
       <div>
         <button
           onClick={handleSave}
