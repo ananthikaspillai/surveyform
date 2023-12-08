@@ -490,10 +490,9 @@ import axios from 'axios';
 import TitleComponent from './TitleComponent';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import TitleIcon from '@mui/icons-material/Title';
-import { useParams } from 'react-router-dom';
+import { current } from '@reduxjs/toolkit';
 
-const QuestionsPage = () => {
-  
+const QuestionsPage = ({ currentQuestions, currentTitle }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '', '']);
@@ -511,6 +510,17 @@ const QuestionsPage = () => {
   const [showTextButton, setShowTextButton] = useState(false);
 
   const modalRef = useRef(null);
+
+  console.log("All Questions", currentQuestions);
+
+  useEffect(() => {
+    if (currentQuestions) {
+      setSavedQuestions(currentQuestions)
+    }
+    if (currentTitle) {
+      setTitle(currentTitle)
+    }
+  }, [currentQuestions, currentTitle])
 
   const handleButtonClick = async () => {
     setShowChoiceButton(true);
@@ -674,7 +684,7 @@ const QuestionsPage = () => {
     <div className="bg-white px-[40px] py-[80px]  ml-[220px] mr-[220px]">
       {showForm ? (
         <div className="mt-2 bg-slate-400  " ref={modalRef}>
-          <TitleComponent title={title} setTitle={setTitle} description={description} setDescription={setDescription} />
+          <TitleComponent title={title || currentTitle} setTitle={setTitle} description={description} setDescription={setDescription} />
         </div>
       ) : (
         <div onClick={() => { setShowForm(true) }} className="text-black  text-4xl py-2 px-4 mt-[30px] ">
@@ -759,14 +769,14 @@ const QuestionsPage = () => {
             )}
           </div>
         )}
-         <div>
-        <button
-          className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4  mt-[60px] rounded "
-          type="button"
-          onClick={handleButtonClick}
-        >
-          + Add New
-        </button>
+        <div>
+          <button
+            className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4  mt-[60px] rounded "
+            type="button"
+            onClick={handleButtonClick}
+          >
+            + Add New
+          </button>
           {showChoiceButton && (
             <button
               onClick={() => {

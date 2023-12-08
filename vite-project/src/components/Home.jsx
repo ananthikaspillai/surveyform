@@ -104,7 +104,7 @@
 
 //   return (
 //     <div className='  '>
-      
+
 //         <Header />
 //         <div className="bg-white  ">
 //           <button
@@ -233,7 +233,7 @@
 
 import Header from "./Header";
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import QuestionsPage from './QuestionsPage';
 import ResponsesPage from './ResponsesPage';
 import PreviewPage from './PreviewPage';
@@ -246,8 +246,32 @@ import axios from 'axios';
 const Home = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState('questions'); // Initialize currentPage state
-  const { surveyId,questionsData } = useLocation().state || {};
+  const { surveyId, questionsData } = useLocation().state || {};
   const [savedQuestions, setSavedQuestions] = useState([]);
+  const [currentQues, setCurrentQues] = useState([])
+  const [currentTitle, setCurrentTitle] = useState()
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchSurveyQuestions = async () => {
+      try {
+        const surveyid = location.state.surveyId;
+        setCurrentTitle(location.state.title)
+
+        if (surveyid) {
+          const response = await axios.get(`http://localhost:8081/surveys/${surveyid}/questions`);
+          console.log("Response:", response.data);
+          setCurrentQues(response.data)
+        }
+      } catch (error) {
+        console.error("Error fetching survey questions:", error);
+        // Handle error: show an error message, redirect, or perform other actions as needed
+      }
+    };
+
+    fetchSurveyQuestions();
+  }, [location.state]);
+
 
   useEffect(() => {
     // Fetch questions based on the survey ID when it changes
@@ -269,6 +293,7 @@ const Home = () => {
     // Perform any logout logic here
     localStorage.removeItem("LoginId");
     navigate('/');
+    window.location.reload();
   };
 
   return (
@@ -313,7 +338,7 @@ const Home = () => {
       </div>
       <div style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover', color: 'black' }} className="py-[70px]  text-black">
         <div className="px-4 py-6 sm:px-0">
-          {currentPage === 'questions' ? <QuestionsPage /> :
+          {currentPage === 'questions' ? <QuestionsPage currentQuestions={currentQues} currentTitle={currentTitle} /> :
             currentPage === 'responses' ? <ResponsesPage /> :
               currentPage === 'preview' ? <PreviewPage savedQuestions={savedQuestions} /> :
                 <CollectResponsePage />}

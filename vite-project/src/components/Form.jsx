@@ -931,7 +931,7 @@
 
 //   }, [filterKeyword, page, showModuleView]);
 
-  
+
 
 //   return (
 //     <div className="">
@@ -1022,23 +1022,23 @@ export const Form = () => {
   const [showModuleView, setShowModuleView] = useState(true);
 
 
-  
-// const handleCardClick = (surveyId) => {
-//     // You can store the surveyId in localStorage or pass it as a parameter to the next page
-//     // localStorage.setItem('selectedSurveyId', surveyId);
-//     console.log('Clicked on card with surveyId:', surveyId);
-//     navigate('/home', { state: { surveyId } });
-//   };
 
-const handleCardClick = async (surveyId) => {
-  try {
-    const response = await axios.get(`http://localhost:8081/surveys/${surveyId}/questions`);
-    const questionsData = response.data;
-    navigate('/home', { state: { surveyId, questionsData } });
-  } catch (error) {
-    console.error('Failed to fetch questions', error);
-  }
-};
+  // const handleCardClick = (surveyId) => {
+  //     // You can store the surveyId in localStorage or pass it as a parameter to the next page
+  //     // localStorage.setItem('selectedSurveyId', surveyId);
+  //     console.log('Clicked on card with surveyId:', surveyId);
+  //     navigate('/home', { state: { surveyId } });
+  //   };
+
+  const handleCardClick = async (surveyId, title) => {
+    // try {
+    //   const response = await axios.get(`http://localhost:8081/surveys/${surveyId}/questions`);
+    //   const questionsData = response.data;
+    navigate('/home', { state: { surveyId: surveyId, title: title } });
+    // } catch (error) {
+    //   console.error('Failed to fetch questions', error);
+    // }
+  };
 
 
   const handleButtonClick = () => {
@@ -1049,9 +1049,9 @@ const handleCardClick = async (surveyId) => {
 
   const handleRecentButtonClick = async () => {
     try {
-      const response = await axios.get(`http://localhost:8081/surveys/pageable?page=${page}&size=7&sort=id,asc`);
-      const newData = response.data.content;
-      setData((prevData) => [...prevData, ...newData]);
+      const response = await axios.get(`http://localhost:8081/surveys/pageable?page=${page}&size=7&sort=id,desc`);
+      const reverseData = response.data.content;
+      setData(reverseData);
     } catch (error) {
       console.error('Failed to fetch data', error);
     }
@@ -1059,10 +1059,10 @@ const handleCardClick = async (surveyId) => {
 
   const handleMyFormsButtonClick = async () => {
     try {
-      const response = await axios.get(`http://localhost:8081/surveys/search?query=${filterKeyword}&page=${page}&size=7&sort=id,asc`);
-      const newData = Array.isArray(response.data.content) ? response.data.content : [];
+      const response = await axios.get(`http://localhost:8081/surveys/search?query=${filterKeyword}&page=${page}&size=7&sort=id,desc`);
+      const reverseData = Array.isArray(response.data.content.reverse) ? response.data.content.reverse : [];
       // const newData = response.data.content;
-      setData((prevData) => [...prevData, ...newData]);
+      setData(reverseData);
     } catch (error) {
       console.error('Failed to fetch data', error);
     }
@@ -1071,7 +1071,8 @@ const handleCardClick = async (surveyId) => {
   const handleDeleteButtonClick = async (surveyId) => {
     try {
       await axios.delete(`http://localhost:8081/surveys/${surveyId}`);
-      handleRecentButtonClick();
+      // handleRecentButtonClick();
+      setData((prevData) => prevData.filter(item => item.id !== surveyId));
     } catch (error) {
       console.error('Failed to delete survey', error);
     }
@@ -1097,15 +1098,20 @@ const handleCardClick = async (surveyId) => {
         let response;
         if (filterKeyword) {
           response = await axios.get(`http://localhost:8081/surveys/search?query=${filterKeyword}&page=${page}&size=7&sort=id,asc`);
+          const newData = response.data.content
+          console.log(response.data)
+          // setData((prevData) => [...prevData, ...newData]);
+          setData(response.data)
         } else {
           response = await axios.get(`http://localhost:8081/surveys/pageable?page=${page}&size=7&sort=id,asc`);
-        }
 
+          setData(response.data.content)
+
+        }
         // const newData = response.data.content;
-        const newData = Array.isArray(response.data.content) ? response.data.content : [];
-        setData((prevData) => [...prevData, ...newData]);
       } catch (error) {
         console.error('Failed to fetch data', error);
+        setData(null)
       }
     };
 
@@ -1113,7 +1119,7 @@ const handleCardClick = async (surveyId) => {
 
   }, [filterKeyword, page, showModuleView]);
 
-  
+
 
   return (
     <div className="">
@@ -1143,11 +1149,14 @@ const handleCardClick = async (surveyId) => {
       {showModuleView && !showDetailedList && data && data.length > 0 ? (
         <div className="flex flex-wrap ">
           {data.map((item, index) => (
-            <div key={index} style={{ backgroundImage: `url(${recent})` }} className="text-white p-10 mt-7 ml-[40px]" onClick={() => handleCardClick(item.id)}>
-              <h2 className="text-xl font-bold">{item.title}</h2>
-              <p className="mt-[6px]">Created Date: {item.createdDate}</p>
-              <p>Created By: {item.createdBy}</p>
-              <p>{item.surveyCount} Response</p>
+            <div key={index} style={{ backgroundImage: `url(${recent})` }}
+              className="text-white p-10 mt-7 ml-[40px]" >
+              <div onClick={() => handleCardClick(item.id, item.title)}>
+                <h2 className="text-xl font-bold">{item.title}</h2>
+                <p className="mt-[6px]">Created Date: {item.createdDate}</p>
+                <p>Created By: {item.createdBy}</p>
+                <p>{item.surveyCount} Response</p>
+              </div>
               <button onClick={() => handleDeleteButtonClick(item.id)} className="text-white px-5 ml-[120px] mt-[20px]">
                 <DeleteIcon />
               </button>
@@ -1159,6 +1168,7 @@ const handleCardClick = async (surveyId) => {
         <div className="mt-4 ml-[40px]">
           <ul>
             {data.map((item, index) => (
+
               <li key={index} className="text-xl font-bold mb-2">
                 {item.title} - Created By: {item.createdBy}, Created Date: {item.createdDate}, Response: {item.surveyCount}
                 <button onClick={() => handleDeleteButtonClick(item.id)} className="text-red-500 ml-2">
